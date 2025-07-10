@@ -1,0 +1,7 @@
+<h1 class="mb-3"><%= @menu.name %></h1>
+
+<p><strong>説明:</strong> <%= @menu.description.presence || "説明はありません" %></p>
+<p><strong>価格:</strong> ¥<%= number_with_delimiter(@menu.price) %></p>
+<p><strong>タンパク質:</strong> <%= @menu.protein.present? ? "#{@menu.protein}g" : "未登録" %></p>
+
+<%= link_to "メニュー一覧に戻る", shop_path(@shop), class: "btn btn-secondary mt-3" %>

@@ -1,0 +1,32 @@
+<%= form_with(model: [menu.shop, menu], local: true) do |form| %>
+  <% if menu.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(menu.errors.count, "件のエラー") %>が発生しました:</h4>
+      <ul>
+        <% menu.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, "メニュー名", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :protein, "タンパク質量 (g)", class: "form-label" %>
+    <%= form.number_field :protein, class: "form-control", step: 0.1, required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "説明", class: "form-label" %>
+    <%= form.text_area :description, rows: 3, class: "form-control" %>
+  </div>
+
+  <div class="d-flex justify-content-start mt-4">
+    <%= form.submit menu.new_record? ? "登録する" : "更新する", class: "btn btn-primary me-2" %>
+    <%= link_to "戻る", shop_path(menu.shop), class: "btn btn-secondary" %>
+  </div>
+<% end %>

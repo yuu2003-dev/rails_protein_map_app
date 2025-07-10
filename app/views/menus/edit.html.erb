@@ -1,0 +1,10 @@
+<% content_for :title, "メニュー編集" %>
+
+<h1 class="mb-4">メニュー編集</h1>
+
+<%= render "form", menu: @menu %>
+
+<div class="mt-4">
+  <%= link_to "このメニューを表示", shop_menu_path(@menu.shop, @menu), class: "btn btn-outline-secondary me-2" %>
+  <%= link_to "この店舗のメニュー一覧に戻る", shop_path(@menu.shop), class: "btn btn-secondary" %>
+</div>

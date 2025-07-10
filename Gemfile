@@ -61,3 +61,14 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+gem 'devise'
+gem 'simple_form'
+gem 'dotenv-rails'
+gem 'geocoder'
+gem 'bootstrap', '~> 5.3'
+
+gem "cssbundling-rails", "~> 1.4"
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'ransack'
+gem 'devise-i18n'
+

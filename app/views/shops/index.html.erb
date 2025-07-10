@@ -1,0 +1,92 @@
+<% if user_signed_in? %>
+  <div class="text-center py-5 mb-4" style="background: linear-gradient(135deg, #f1f8e9, #e0f2f1); border-radius: .75rem;">
+    <h1 class="display-3 fw-bold mb-3">Protein Map</h1>
+    <p class="lead mb-4">
+      ようこそ
+      <span class="fw-semibold text-success">
+        <%= current_user.respond_to?(:guest?) && current_user.guest? ? "ゲストさん" : "#{current_user.username}さん" %>
+      </span>
+    </p>
+    <%= link_to "店舗を登録する", new_shop_path, class: "btn btn-success btn-lg px-5 shadow-sm" %>
+  </div>
+<% else %>
+  <div class="text-center py-5 mb-5" style="background: linear-gradient(135deg, #e8f5e9, #f1f8e9); border-radius: .75rem;">
+    <h2 class="fw-bold display-5 mb-3 text-success">高タンパク食をシェアしよう！</h2>
+    <p class="lead mb-4 text-muted">
+      あなたのおすすめ店舗やメニューを投稿して、みんなで盛り上がろう！
+    </p>
+    <div class="d-flex justify-content-center flex-wrap gap-3">
+      <%= link_to "新規登録して投稿する", new_user_registration_path, class: "btn btn-success btn-lg px-4 fw-bold shadow" %>
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-secondary btn-lg px-4 fw-bold" %>
+      <%= button_to "ゲストログイン", guest_sign_in_path, method: :post, class: "btn btn-outline-primary btn-lg px-4 fw-bold" %>
+    </div>
+  </div>
+<% end %>
+
+<div class="container mb-4">
+  <%= form_with url: shops_path, method: :get, local: true, class: "d-flex justify-content-center mb-3" do %>
+    <%= text_field_tag :q, params[:q], placeholder: "店舗名・住所・説明を検索", class: "form-control w-50 me-2 shadow-sm" %>
+    <%= submit_tag "検索", class: "btn btn-primary shadow-sm" %>
+  <% end %>
+</div>
+
+<div id="map" class="rounded shadow-sm mb-5" style="height: 500px; width: 100%;"></div>
+
+<h2 class="mb-4 fw-bold">店舗一覧</h2>
+
+<% if @shops.any? %>
+  <div class="row">
+    <% @shops.each do |shop| %>
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card shadow-sm h-100 border-0">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold">
+              <%= link_to shop.name, shop_path(shop), class: "text-decoration-none text-dark" %>
+            </h5>
+            <p class="card-text text-muted mb-2">
+              <%= truncate(shop.description, length: 60) || "説明はありません" %>
+            </p>
+            <p class="card-text small text-muted">
+              <i class="bi bi-geo-alt-fill"></i> <%= shop.address %>
+            </p>
+            <div class="mt-auto">
+              <%= link_to "詳細を見る", shop_path(shop), class: "btn btn-outline-primary btn-sm w-100" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-muted text-center">現在登録されている店舗はありません。</p>
+<% end %>
+
+<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap", async: true, defer: true %>
+
+<script>
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: {
+        lat: <%= @shops.first&.latitude || 35.6895 %>,
+        lng: <%= @shops.first&.longitude || 139.6917 %>
+      }
+    });
+
+    const markers = <%= raw @markers.to_json %>;
+    markers.forEach(marker => {
+      const gMarker = new google.maps.Marker({
+        position: { lat: marker.lat, lng: marker.lng },
+        map: map
+      });
+
+      const infowindow = new google.maps.InfoWindow({
+        content: marker.info_window
+      });
+
+      gMarker.addListener('click', () => {
+        infowindow.open(map, gMarker);
+      });
+    });
+  }
+</script>

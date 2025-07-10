@@ -1,0 +1,69 @@
+<h2 class="mb-4">プロフィール編集</h2>
+
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs mb-3">
+    <%= f.input :email, required: true, autofocus: true, label: "メールアドレス" %>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <p class="text-warning">確認待ちのメールアドレス: <%= resource.unconfirmed_email %></p>
+    <% end %>
+
+    <%= f.input :username, required: true, label: "ユーザー名", input_html: { autocomplete: "username" } %>
+
+    <%= f.input :password,
+                label: "新しいパスワード (変更しない場合は空欄)",
+                required: false,
+                input_html: { autocomplete: "new-password" } %>
+
+    <%= f.input :password_confirmation,
+                label: "新しいパスワード（確認）",
+                required: false,
+                input_html: { autocomplete: "new-password" } %>
+
+    <%= f.input :current_password,
+                label: "現在のパスワード (変更の確認用)",
+                hint: "プロフィールを更新するには現在のパスワードが必要です",
+                required: true,
+                input_html: { autocomplete: "current-password" } %>
+  </div>
+
+  <div class="form-actions mb-4">
+    <%= f.button :submit, "更新する", class: "btn btn-primary" %>
+    <%= link_to "キャンセル", root_path, class: "btn btn-outline-secondary ms-2" %>
+  </div>
+<% end %>
+
+<hr class="my-4">
+
+
+<!-- 削除ボタン (モーダル起動) -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+  アカウントを削除
+</button>
+
+<!-- モーダル -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="deleteAccountModalLabel">アカウント削除の確認</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+      </div>
+      <div class="modal-body">
+        本当にアカウントを削除しますか？<br>
+        この操作は取り消せません。
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+        <%= button_to "削除する", registration_path(resource_name),
+                      method: :delete,
+                      form: { data: { turbo: false } },
+                      class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to "戻る", root_path, class: "btn btn-link mt-3" %>

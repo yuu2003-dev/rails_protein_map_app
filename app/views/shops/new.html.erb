@@ -1,0 +1,30 @@
+<h1>新しい店舗を登録</h1>
+
+<% if @shop.errors.any? %>
+  <div class="alert alert-danger">
+    <h2><%= pluralize(@shop.errors.count, "件のエラー") %>があります:</h2>
+    <ul>
+      <% @shop.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @shop, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "店舗名" %>
+    <%= f.text_field :name, class: "form-control", autofocus: true, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address, "住所" %>
+    <%= f.text_field :address, class: "form-control", required: true %>
+  </div>
+
+  <div class="form-group mt-3">
+    <%= f.submit "登録する", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<%= link_to "店舗一覧に戻る", shops_path, class: "btn btn-secondary mt-2" %>

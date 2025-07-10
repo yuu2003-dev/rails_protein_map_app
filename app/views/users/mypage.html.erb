@@ -1,0 +1,86 @@
+<h1 class="mb-4">マイページ</h1>
+
+<h2 class="mt-4">あなたの店舗一覧</h2>
+<% if @shops.any? %>
+  <ul class="list-group mb-4 shadow-sm">
+    <% @shops.each do |shop| %>
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="fw-bold"><%= link_to shop.name, shop_path(shop), class: "text-decoration-none" %></h5>
+            <p class="mb-1 text-muted"><%= shop.address %></p>
+          </div>
+          <div class="btn-group">
+            <%= link_to "編集", edit_shop_path(shop), class: "btn btn-sm btn-outline-primary" %>
+            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= shop.id %>">
+              削除
+            </button>
+          </div>
+        </div>
+
+        <!-- メニュー一覧 -->
+        <div class="mt-3 ps-3 border-start">
+          <h6 class="fw-bold">この店舗のメニュー</h6>
+          <% if shop.menus.any? %>
+            <ul class="list-group mb-2">
+              <% shop.menus.each do |menu| %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <%= link_to menu.name, shop_menu_path(shop, menu), class: "text-decoration-none" %>
+                  <div class="btn-group">
+                    <%= link_to "編集", edit_shop_menu_path(shop, menu), class: "btn btn-sm btn-outline-secondary" %>
+                    <%= button_to "削除", shop_menu_path(shop, menu), method: :delete, form: { data: { turbo: false } }, class: "btn btn-sm btn-outline-danger" %>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-muted">まだメニューが登録されていません。</p>
+          <% end %>
+
+          <%= link_to "メニュー追加", new_shop_menu_path(shop), class: "btn btn-sm btn-outline-success" %>
+        </div>
+
+        <!-- 店舗削除モーダル -->
+        <div class="modal fade" id="deleteModal<%= shop.id %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= shop.id %>" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel<%= shop.id %>">確認</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+              </div>
+              <div class="modal-body">
+                本当に「<strong><%= shop.name %></strong>」を削除しますか？
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                <%= button_to "削除", shop_path(shop), method: :delete, form: { data: { turbo: false } }, class: "btn btn-danger" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">まだ店舗を投稿していません。</p>
+<% end %>
+
+<hr class="my-4">
+
+<h2 class="mt-4">お気に入り店舗一覧</h2>
+<% if @favorite_shops.any? %>
+  <ul class="list-group mb-4 shadow-sm">
+    <% @favorite_shops.each do |shop| %>
+      <li class="list-group-item">
+        <%= link_to shop.name, shop_path(shop), class: "fw-bold text-decoration-none" %><br>
+        <small class="text-muted"><%= shop.address %></small>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">お気に入り登録した店舗はありません。</p>
+<% end %>
+
+<div class="text-end">
+  <%= link_to "プロフィール編集", edit_user_registration_path, class: "btn btn-outline-secondary" %>
+</div>

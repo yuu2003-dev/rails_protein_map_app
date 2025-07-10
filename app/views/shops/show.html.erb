@@ -1,0 +1,65 @@
+<h1 class="mb-3"><%= @shop.name %></h1>
+
+<p><strong>住所:</strong> <%= @shop.address %></p>
+<p><strong>説明:</strong> <%= @shop.description.presence || "説明はありません" %></p>
+
+<% if user_signed_in? %>
+  <% if current_user.favorites.exists?(shop: @shop) %>
+    <%= button_to "お気に入り解除", unfavorite_shop_path(@shop),
+                  method: :delete,
+                  class: "btn btn-warning my-2" %>
+  <% else %>
+    <%= button_to "お気に入り追加", favorite_shop_path(@shop),
+                  method: :post,
+                  class: "btn btn-outline-primary my-2" %>
+  <% end %>
+<% end %>
+
+<div id="map" class="rounded shadow-sm mb-4" style="height: 400px; width: 100%;"></div>
+
+<%= link_to "店舗一覧に戻る", shops_path, class: "btn btn-secondary mb-4" %>
+
+<hr class="my-4">
+
+<h2 class="mb-3">メニュー一覧</h2>
+
+<% if @shop.menus.any? %>
+  <ul class="list-group mb-3">
+    <% @shop.menus.each do |menu| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <%= link_to menu.name, shop_menu_path(@shop, menu), class: "fw-bold text-decoration-none" %><br>
+          <small class="text-muted">
+            タンパク質: <%= menu.protein.present? ? "#{menu.protein}g" : "未登録" %>
+          </small>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">この店舗にはまだメニューが登録されていません。</p>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= link_to "メニュー追加", new_shop_menu_path(@shop), class: "btn btn-primary mt-3" %>
+<% else %>
+  <p class="text-muted mt-3">メニューを追加するにはログインしてください。</p>
+<% end %>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap">
+</script>
+
+<script>
+  function initMap() {
+    const shopLocation = { lat: <%= @shop.latitude %>, lng: <%= @shop.longitude %> };
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 15,
+      center: shopLocation
+    });
+    const marker = new google.maps.Marker({
+      position: shopLocation,
+      map: map
+    });
+  }
+</script>
