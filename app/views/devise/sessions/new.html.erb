@@ -1,0 +1,49 @@
+<h2 class="mb-4">ログイン</h2>
+
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, class: "card p-4 shadow-sm" }) do |f| %>
+  <div class="form-group mb-3">
+    <%= f.input :email,
+                required: true,
+                autofocus: true,
+                label: "メールアドレス",
+                input_html: { autocomplete: "email", class: "form-control" },
+                wrapper_html: { class: "mb-3" } %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.input :password,
+                required: true,
+                label: "パスワード",
+                input_html: { autocomplete: "current-password", class: "form-control" },
+                wrapper_html: { class: "mb-3" } %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="form-check mb-3">
+      <%= f.input :remember_me,
+                  as: :boolean,
+                  label: "ログイン状態を保持する",
+                  wrapper_html: { class: "form-check" },
+                  input_html: { class: "form-check-input" },
+                  label_html: { class: "form-check-label" } %>
+    </div>
+  <% end %>
+
+  <div class="d-grid gap-2">
+    <%= f.button :submit, "ログイン", class: "btn btn-primary btn-block" %>
+  </div>
+<% end %>
+
+<hr class="my-4">
+
+<div class="d-grid gap-2 mb-3">
+  <%= button_to "ゲストログイン", guest_sign_in_path,
+      method: :post,
+      class: "btn btn-secondary btn-block",
+      form: { data: { turbo: false } } %>
+</div>
+
+<div class="text-center">
+  <%= link_to "新規登録はこちら", new_user_registration_path, class: "btn btn-link" %><br>
+  <%= link_to "パスワードをお忘れですか？", new_user_password_path, class: "btn btn-link" %>
+</div>

@@ -1,0 +1,25 @@
+<%= form_with(model: shop, local: true) do |form| %>
+  <% if shop.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(shop.errors.count, "エラー") %>が発生しました:</h2>
+      <ul>
+        <% shop.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name, "店舗名" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :address, "住所" %>
+    <%= form.text_field :address, class: "form-control" %>
+  </div>
+
+
+  <%= form.submit class: "btn btn-primary" %>
+<% end %>
