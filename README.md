@@ -8,7 +8,7 @@
 ![トップページ](./top_page.png)
 
 ## 3. サービスURL
-https://protein-map-app.herokuapp.com/
+[https://protein-map-app.herokuapp.com/](https://protein-map-app-88d2b53f685b.herokuapp.com/)
 
 ## 4. サービスの概要
 「Protein Map」は、おすすめの高タンパク食メニューや店舗を地図上で簡単に共有・検索できるアプリです。
