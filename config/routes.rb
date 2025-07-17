@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: "sessions"
@@ -11,7 +13,7 @@ Rails.application.routes.draw do
 
   get "mypage", to: "users#mypage", as: :mypage
 
-  resources :users, only: [ :edit, :update ]
+  resources :users, only: %i[edit update]
 
   resources :shops do
     member do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user
@@ -7,8 +9,7 @@ class UsersController < ApplicationController
     @favorite_shops = @user.favorite_shops.includes(:menus, :user)
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if update_user
@@ -26,10 +27,8 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    permitted = [ :username, :email ]
-    if params[:user][:password].present?
-      permitted += [ :password, :password_confirmation ]
-    end
+    permitted = %i[username email]
+    permitted += %i[password password_confirmation] if params[:user][:password].present?
     params.require(:user).permit(permitted)
   end
 

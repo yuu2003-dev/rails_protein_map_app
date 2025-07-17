@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -60,11 +62,11 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "devise"
-gem "simple_form"
-gem "geocoder"
 gem "bootstrap", "~> 5.3"
 gem "cssbundling-rails", "~> 1.4"
-gem "dotenv-rails", groups: [ :development, :test ]
-gem "ransack"
+gem "devise"
 gem "devise-i18n"
+gem "dotenv-rails", groups: %i[development test]
+gem "geocoder"
+gem "ransack"
+gem "simple_form"

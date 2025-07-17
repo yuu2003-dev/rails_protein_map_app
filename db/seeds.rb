@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # テストユーザーを作成
-test_user = User.find_or_create_by!(email: 'test@example.com') do |user|
-  user.password = 'password'
-  user.username = 'テストユーザー'
+test_user = User.find_or_create_by!(email: "test@example.com") do |user|
+  user.password = "password"
+  user.username = "テストユーザー"
 end
 
 puts "✅ テストユーザーを作成しました: #{test_user.email}"

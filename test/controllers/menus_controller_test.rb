@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class MenusControllerTest < ActionDispatch::IntegrationTest
@@ -17,7 +19,9 @@ class MenusControllerTest < ActionDispatch::IntegrationTest
 
   test "should create menu" do
     assert_difference("Menu.count") do
-      post menus_url, params: { menu: { calories: @menu.calories, description: @menu.description, name: @menu.name, protein: @menu.protein, shop_id: @menu.shop_id, user_id: @menu.user_id } }
+      post menus_url,
+           params: { menu: { calories: @menu.calories, description: @menu.description, name: @menu.name, protein: @menu.protein,
+                             shop_id: @menu.shop_id, user_id: @menu.user_id } }
     end
 
     assert_redirected_to menu_url(Menu.last)
@@ -34,7 +38,9 @@ class MenusControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update menu" do
-    patch menu_url(@menu), params: { menu: { calories: @menu.calories, description: @menu.description, name: @menu.name, protein: @menu.protein, shop_id: @menu.shop_id, user_id: @menu.user_id } }
+    patch menu_url(@menu),
+          params: { menu: { calories: @menu.calories, description: @menu.description, name: @menu.name, protein: @menu.protein,
+                            shop_id: @menu.shop_id, user_id: @menu.user_id } }
     assert_redirected_to menu_url(@menu)
   end
 

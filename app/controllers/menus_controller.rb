@@ -1,16 +1,17 @@
+# frozen_string_literal: true
+
 class MenusController < ApplicationController
   # メニューの登録・編集・削除のみ認証が必要
-  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :set_shop
-  before_action :set_menu, only: [ :show, :edit, :update, :destroy ]
-  before_action :authorize_user!, only: [ :edit, :update, :destroy ]
+  before_action :set_menu, only: %i[show edit update destroy]
+  before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
     @menus = @shop.menus
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @menu = @shop.menus.build
@@ -27,8 +28,7 @@ class MenusController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @menu.update(menu_params)
@@ -55,9 +55,9 @@ class MenusController < ApplicationController
   end
 
   def authorize_user!
-    unless @menu.user == current_user
-      redirect_to shop_path(@shop), alert: "このメニューを編集・削除する権限がありません。"
-    end
+    return if @menu.user == current_user
+
+    redirect_to shop_path(@shop), alert: "このメニューを編集・削除する権限がありません。"
   end
 
   def menu_params

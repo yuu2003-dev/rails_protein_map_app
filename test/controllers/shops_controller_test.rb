@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class ShopsControllerTest < ActionDispatch::IntegrationTest
@@ -17,7 +19,9 @@ class ShopsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create shop" do
     assert_difference("Shop.count") do
-      post shops_url, params: { shop: { address: @shop.address, description: @shop.description, latitude: @shop.latitude, longitude: @shop.longitude, name: @shop.name, user_id: @shop.user_id } }
+      post shops_url,
+           params: { shop: { address: @shop.address, description: @shop.description, latitude: @shop.latitude,
+                             longitude: @shop.longitude, name: @shop.name, user_id: @shop.user_id } }
     end
 
     assert_redirected_to shop_url(Shop.last)
@@ -34,7 +38,9 @@ class ShopsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update shop" do
-    patch shop_url(@shop), params: { shop: { address: @shop.address, description: @shop.description, latitude: @shop.latitude, longitude: @shop.longitude, name: @shop.name, user_id: @shop.user_id } }
+    patch shop_url(@shop),
+          params: { shop: { address: @shop.address, description: @shop.description, latitude: @shop.latitude,
+                            longitude: @shop.longitude, name: @shop.name, user_id: @shop.user_id } }
     assert_redirected_to shop_url(@shop)
   end
 

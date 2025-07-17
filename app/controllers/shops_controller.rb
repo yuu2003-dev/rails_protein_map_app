@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class ShopsController < ApplicationController
-  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
-  before_action :set_shop, only: [ :show, :edit, :update, :destroy ]
-  before_action :authorize_user!, only: [ :edit, :update, :destroy ]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
+  before_action :set_shop, only: %i[show edit update destroy]
+  before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
     if params[:q].present?
@@ -20,8 +22,7 @@ class ShopsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @shop = current_user.shops.build
@@ -37,8 +38,7 @@ class ShopsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @shop.update(shop_params)
