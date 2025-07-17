@@ -1,22 +1,22 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    sessions: 'sessions'
+    sessions: "sessions"
   }
 
   devise_scope :user do
-    post 'users/guest_sign_in', to: 'sessions#guest_sign_in', as: :guest_sign_in
+    post "users/guest_sign_in", to: "sessions#guest_sign_in", as: :guest_sign_in
   end
 
   root "shops#index"
 
-  get 'mypage', to: 'users#mypage', as: :mypage
+  get "mypage", to: "users#mypage", as: :mypage
 
-  resources :users, only: [:edit, :update]
+  resources :users, only: [ :edit, :update ]
 
   resources :shops do
     member do
-      post 'favorite', to: 'favorites#create', as: :favorite
-      delete 'unfavorite', to: 'favorites#destroy', as: :unfavorite
+      post "favorite", to: "favorites#create", as: :favorite
+      delete "unfavorite", to: "favorites#destroy", as: :unfavorite
     end
     resources :menus
   end

@@ -1,9 +1,9 @@
 class MenusController < ApplicationController
   # メニューの登録・編集・削除のみ認証が必要
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
   before_action :set_shop
-  before_action :set_menu, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user!, only: [:edit, :update, :destroy]
+  before_action :set_menu, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_user!, only: [ :edit, :update, :destroy ]
 
   def index
     @menus = @shop.menus
