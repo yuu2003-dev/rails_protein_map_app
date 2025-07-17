@@ -2,11 +2,16 @@
 
 AllCops:
   NewCops: enable
-  Exclude:
-    - 'bin/*'
-    - 'db/schema.rb'
-    - 'db/queue_schema.rb'
   TargetRubyVersion: 3.3
+  Exclude:
+    - "bin/*"
+    - "db/schema.rb"
+    - "db/queue_schema.rb"
+  # RuboCop extensions (plugin形式)
+  Plugins:
+    - rubocop-rails
+    - rubocop-performance
+    - rubocop-rspec
 
 Style/Documentation:
   Enabled: false
@@ -37,8 +42,3 @@ Rails/I18nLocaleTexts:
 
 Rails/BulkChangeTable:
   Enabled: false
-
-require:
-  - rubocop-rails
-  - rubocop-performance
-  - rubocop-rspec
