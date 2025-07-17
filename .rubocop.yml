@@ -1,8 +1,14 @@
 Style/StringLiterals:
-  EnforcedStyle: double_quotes
+  Enabled: false
 
 Layout/SpaceInsideArrayLiteralBrackets:
-  EnforcedStyle: space
+  Enabled: false
 
 Layout/TrailingEmptyLines:
   Enabled: true
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
