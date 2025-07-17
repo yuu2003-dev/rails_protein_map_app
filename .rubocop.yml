@@ -3,3 +3,6 @@ Style/StringLiterals:
 
 Layout/SpaceInsideArrayLiteralBrackets:
   EnforcedStyle: space
+
+Layout/TrailingEmptyLines:
+  Enabled: true
