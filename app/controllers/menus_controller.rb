@@ -17,6 +17,8 @@ class MenusController < ApplicationController
     @menu = @shop.menus.build
   end
 
+  def edit; end
+
   def create
     @menu = @shop.menus.build(menu_params)
     @menu.user = current_user
@@ -27,8 +29,6 @@ class MenusController < ApplicationController
       render :new
     end
   end
-
-  def edit; end
 
   def update
     if @menu.update(menu_params)
@@ -61,6 +61,6 @@ class MenusController < ApplicationController
   end
 
   def menu_params
-    params.require(:menu).permit(:name, :description, :price, :protein)
+    params.expect(menu: %i[name description price protein])
   end
 end

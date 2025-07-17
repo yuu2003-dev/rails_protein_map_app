@@ -6,7 +6,7 @@ test_user = User.find_or_create_by!(email: "test@example.com") do |user|
   user.username = "テストユーザー"
 end
 
-puts "✅ テストユーザーを作成しました: #{test_user.email}"
+Rails.logger.debug { "✅ テストユーザーを作成しました: #{test_user.email}" }
 
 # 店舗データ
 shop1 = test_user.shops.find_or_create_by!(
@@ -25,7 +25,7 @@ shop2 = test_user.shops.find_or_create_by!(
   description: "これはテストデータです"
 )
 
-puts "✅ 店舗データを作成しました: #{shop1.name}, #{shop2.name}"
+Rails.logger.debug { "✅ 店舗データを作成しました: #{shop1.name}, #{shop2.name}" }
 
 # メニューデータ
 menu1 = shop1.menus.find_or_create_by!(
@@ -52,6 +52,6 @@ menu3 = shop2.menus.find_or_create_by!(
   description: "これはテストデータです"
 )
 
-puts "✅ メニューデータを作成しました: #{menu1.name}, #{menu2.name}, #{menu3.name}"
+Rails.logger.debug { "✅ メニューデータを作成しました: #{menu1.name}, #{menu2.name}, #{menu3.name}" }
 
-puts "🌱 シードデータの投入が完了しました！"
+Rails.logger.debug "🌱 シードデータの投入が完了しました！"

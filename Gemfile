@@ -70,3 +70,9 @@ gem "dotenv-rails", groups: %i[development test]
 gem "geocoder"
 gem "ransack"
 gem "simple_form"
+
+gem "rubocop-rails", "~> 2.32"
+
+gem "rubocop-performance", "~> 1.25"
+
+gem "rubocop-rspec", "~> 3.6"

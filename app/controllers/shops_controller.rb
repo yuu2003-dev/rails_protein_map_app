@@ -28,6 +28,8 @@ class ShopsController < ApplicationController
     @shop = current_user.shops.build
   end
 
+  def edit; end
+
   def create
     @shop = current_user.shops.build(shop_params)
     if @shop.save
@@ -37,8 +39,6 @@ class ShopsController < ApplicationController
       render :new
     end
   end
-
-  def edit; end
 
   def update
     if @shop.update(shop_params)
@@ -65,6 +65,6 @@ class ShopsController < ApplicationController
   end
 
   def shop_params
-    params.require(:shop).permit(:name, :address, :description)
+    params.expect(shop: %i[name address description])
   end
 end
