@@ -7,8 +7,15 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'selenium/webdriver'
 
-Selenium::WebDriver::Chrome::Service.driver_path = "/opt/homebrew/bin/chromedriver"
-Selenium::WebDriver::Chrome.path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+if File.exist?("/opt/homebrew/bin/chromedriver")
+  Selenium::WebDriver::Chrome::Service.driver_path = "/opt/homebrew/bin/chromedriver"
+elsif File.exist?("/usr/bin/chromedriver")
+  Selenium::WebDriver::Chrome::Service.driver_path = "/usr/bin/chromedriver"
+end
+
+if File.exist?("/usr/bin/google-chrome")
+  Selenium::WebDriver::Chrome.path = "/usr/bin/google-chrome"
+end
 
 Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
@@ -25,7 +32,6 @@ Capybara.javascript_driver = :selenium_chrome_headless
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
-
   config.include Devise::Test::IntegrationHelpers, type: :system
 
   config.infer_spec_type_from_file_location!
