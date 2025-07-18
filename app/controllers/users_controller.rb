@@ -26,9 +26,9 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    permitted = [:username, :email]
+    permitted = [ :username, :email ]
     if params[:user][:password].present?
-      permitted += [:password, :password_confirmation]
+      permitted += [ :password, :password_confirmation ]
     end
     params.require(:user).permit(permitted)
   end
